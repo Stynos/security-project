@@ -222,5 +222,5 @@ def search(request):
             profile_lists = Profile.objects.filter(id_user=ids)
             username_profile_list.append(profile_lists)
         
-         cusername_profile_list = list(chain(*username_profile_list))
+         username_profile_list = list(chain(*username_profile_list))
      return render(request, 'search.html', {'user_profile': user_profile, 'username_profile_list': username_profile_list})
