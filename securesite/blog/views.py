@@ -11,15 +11,17 @@ import random
 def checkProfileExist(all_profiles, user_object):
     total_profiles = len(all_profiles)
     iteration = 0
+    match_found = False
 
     for profile in all_profiles:
         iteration += 1
         if (str(profile) == str(user_object)):
+            match_found = True
             break
         else:
             continue
 
-    if (iteration == total_profiles):
+    if (iteration == total_profiles and not match_found):
         user_model = User.objects.get(username=user_object)
         new_profile = Profile.objects.create(
             user=user_object, id_user=user_model.id)
