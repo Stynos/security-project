@@ -9,34 +9,33 @@ import random
 
 # Create your views here.
 def checkProfileExist(all_profiles, user_object):
-    all_profiles_list = list(all_profiles)
+    total_profiles = len(all_profiles)
+    iteration = 0
 
     for profile in all_profiles:
+        iteration += 1
         if (str(profile) == str(user_object)):
-            print("EXIST")
             break
         else:
-            print("DOES NOT EXIST")
-        # create a profile object for the new user
-        print("GETS HERE")  
+            continue
+
+    if (iteration == total_profiles):
         user_model = User.objects.get(username=user_object)
         new_profile = Profile.objects.create(
             user=user_object, id_user=user_model.id)
         new_profile.save() 
 
     return
-    
-    
 
 @login_required(login_url='signin')
 def index(request):
     user_object = User.objects.get(username=request.user.username)
     all_users = User.objects.all()   
     all_profiles = Profile.objects.all()
+    
+    checkProfileExist(all_profiles, user_object)
+    
     user_profile = Profile.objects.get(user=user_object)
-    
-    # checkProfileExist(all_profiles, user_object)
-    
 
     user_following_list = []
     feed = []
