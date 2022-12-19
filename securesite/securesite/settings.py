@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_registration',
     'blog',
 ]
 
@@ -141,7 +142,14 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 #HTTPS redirects
 SECURE_SSL_REDIRECT = True
 
+# add logout redirect URL
+LOGOUT_REDIRECT_URL = '/signin'
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# activation time setting
+ACCOUNT_ACTIVATION_DAYS = 1
 
 
 
