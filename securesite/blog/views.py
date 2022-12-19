@@ -8,12 +8,24 @@ from itertools import chain
 import random
 
 # Create your views here.
-
+def checkProfileExist(current_user_object):
+    all_profiles = Profile.objects.all()
+    
+    return
+    
+    
 
 @login_required(login_url='signin')
 def index(request):
     user_object = User.objects.get(username=request.user.username)
+    all_users = User.objects.all()
+    print(all_users)
+    
     user_profile = Profile.objects.get(user=user_object)
+    
+    
+
+    print(user_profile)
 
     user_following_list = []
     feed = []
@@ -32,6 +44,7 @@ def index(request):
 
     # user suggestion starts
     all_users = User.objects.all()
+    print(all_users)
     user_following_all = []
 
     for user in user_following:
@@ -55,6 +68,7 @@ def index(request):
         profile_lists = Profile.objects.filter(id_user=ids)
         username_profile_list.append(profile_lists)
 
+    print(username_profile_list)
     suggestions_username_profile_list = list(chain(*username_profile_list))
 
     return render(request, 'index.html', {'user_profile': user_profile, 'posts': feed_list, 'suggestions_username_profile_list': suggestions_username_profile_list[:4]})
