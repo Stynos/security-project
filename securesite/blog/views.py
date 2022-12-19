@@ -84,32 +84,6 @@ def index(request):
     return render(request, 'index.html', {'user_profile': user_profile, 'posts': feed_list, 'suggestions_username_profile_list': suggestions_username_profile_list[:4]})
 
 
-def signup(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        # Check if form data is valid
-        if form.is_valid():
-            username = request.POST['username']
-            email = request.POST['email']
-            password = request.POST['password']
-            
-
-            # create a profile object for the new user
-            user_model = User.objects.get(username=username)
-        
-            new_profile = Profile.objects.create(
-                user=user_model, id_user=user_model.id)
-            new_profile.save()
-            return redirect('/accounts/register/complete/')
-
-        else:
-            messages.info(request, 'Data not valid')
-            return redirect('/accounts/register/')
-
-    else:
-        return render(request, 'registration_form.html')
-
-
 def signin(request):
 
     if request.method == 'POST':
