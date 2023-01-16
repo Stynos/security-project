@@ -6,6 +6,7 @@ from .models import Profile, Post, LikePost, FollowersCount
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 import random
+from django_ratelimit.decorators import ratelimit
 
 # Create your views here.
 def checkProfileExist(all_profiles, user_object):
@@ -83,10 +84,11 @@ def index(request):
 
     return render(request, 'index.html', {'user_profile': user_profile, 'posts': feed_list, 'suggestions_username_profile_list': suggestions_username_profile_list[:4]})
 
-
+@ratelimit(key='ip', rate='2/10s')
 def signin(request):
 
     if request.method == 'POST':
+        
         username = request.POST['username']
         password = request.POST['password']
 
